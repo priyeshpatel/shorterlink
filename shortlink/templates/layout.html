@@ -1,0 +1,133 @@
+<!doctype html>
+<html>
+    <head>
+        <title>Shortlink</title>
+
+        <style type="text/css">
+            body {
+                font-family: Optima, Segoe, "Segoe UI", Candara, Calibri, Arial, sans-serif;
+                background: #eee;
+                color: #222;
+                text-align: center;
+                padding-top: 50px;
+            }
+
+            a, a:hover, a:active, a:visited, a:link {
+                text-decoration: none;
+                color: #4e7e78;
+            }
+
+            a:hover {
+                color: #76aaa4;
+            }
+
+            h1 {
+                margin-bottom: 40px;
+            }
+
+            h1 a, h1 a:hover, h1 a:active {
+                text-decoration: none;
+            }
+
+            h1 span {
+                padding: 30px 50px;
+                background: #fd2835;
+                color: white;
+                font-size: 40px;
+            }
+
+            h1 a:hover span {
+                color: #eee;
+                background: #fd4a55;
+            }
+
+            h2 {
+                font-size: 16px;
+                color: #3a5e5a;
+                font-style: italic;
+            }
+
+            #input {
+                margin: 40px 0;
+            }
+
+            #link input {
+                padding: 15px;
+                border: 0;
+                outline: 0;
+                font-family: monospace;
+            }
+
+            #link #url {
+                background: #ccc;
+                color: #666;
+                width: 300px;
+            }
+
+            ::-webkit-input-placeholder {
+                color: #666;
+            }
+
+            :-moz-placeholder {
+                color: #666;
+            }
+
+            #link #submit {
+                background: #fd2835;
+                color: white;
+            }
+
+            #link #submit:hover {
+                color: #eee;
+                background: #fd4a55;
+                cursor: pointer;
+            }
+
+            #output {
+                margin-bottom: 50px;
+            }
+
+            #notices {
+                margin-bottom: 40px;
+                color: #fd2835;
+                font-weight: bold;
+            }
+
+            #footer {
+                font-size: 12px;
+            }
+        </style>
+    </head>
+
+    <body>
+        <h1><a href="/"><span>shortlink</span></a></h1>
+        <h2>a simple shortlink app built with flask and redis; running on heroku</h2>
+
+        <div id="input">
+            <form id="link" method="post">
+                <input id="url" name="url" placeholder="your url" />
+                <input type="submit" id="submit" value="get shortlink" />
+            </form>
+        </div>
+
+        {% if shortlink %}
+        <div id="output">
+            <p>your shortlink is <a href="{{ config.url }}/{{ url }}" target="_blank">{{ config.url }}/{{ url }}</a></p>
+        </div>
+        {% endif %}
+
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                <div id="notices">
+                {% for message in messages %}
+                    <p>{{ message }}</p>
+                {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
+
+        <div id="footer">
+            <p><a href="https://github.com/priyeshpatel/shortlink" target="_blank">[source on github]</a> / <a href="http://pexat.com" target="_blank">[Priyesh Patel]</a></p>
+        </div>
+    </body>
+</html>

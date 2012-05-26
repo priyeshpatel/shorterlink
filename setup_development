@@ -1,0 +1,9 @@
+export DEVELOPMENT="True"
+export SECRET_KEY="hfdasjc3nb3j0xa5t"
+export REDIS_HOST="127.0.0.1"
+export REDIS_PORT=6379
+export REDIS_DB=15
+
+source venv/bin/activate
+
+echo "Shortlink development environment setup"
