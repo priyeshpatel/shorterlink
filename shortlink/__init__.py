@@ -18,12 +18,12 @@ def make():
     destination = request.form['url']
     while True:
         url = utils.generate_link(config['url_length'])
-        if r.setnx(url, destination): break
+        if r.setnx("link:" + url, destination): break
     return view('layout.html', { 'shortlink': True, 'url': url })
 
 @shortlink.route('/<link>')
 def go(link):
-    destination = r.get(link)
+    destination = r.get("link:" + link)
     if destination:
         return redirect(destination)
     flash('no such shortlink')
