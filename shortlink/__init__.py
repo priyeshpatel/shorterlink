@@ -7,9 +7,7 @@ shortlink = Flask(__name__)
 
 shortlink.secret_key = utils.env('SECRET_KEY')
 
-r = redis.StrictRedis(host=utils.env('REDIS_HOST'), 
-        port=int(utils.env('REDIS_PORT')),
-        db=int(utils.env('REDIS_DB')))
+r = redis.from_url(utils.env('REDISTOGO_URI'), int(utils.env('REDIS_DB')))
 
 @shortlink.route('/', methods=['GET'])
 def index():
