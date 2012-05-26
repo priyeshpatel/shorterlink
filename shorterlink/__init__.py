@@ -3,30 +3,30 @@ from config import config
 from . import utils
 import redis
 
-shortlink = Flask(__name__)
+shorterlink = Flask(__name__)
 
-shortlink.secret_key = utils.env('SECRET_KEY')
+shorterlink.secret_key = utils.env('SECRET_KEY')
 
 r = redis.from_url(utils.env('REDISTOGO_URL'), int(utils.env('REDIS_DB')))
 
-@shortlink.route('/', methods=['GET'])
+@shorterlink.route('/', methods=['GET'])
 def index():
     return view('layout.html')
 
-@shortlink.route('/', methods=['POST'])
+@shorterlink.route('/', methods=['POST'])
 def make():
     destination = request.form['url']
     while True:
         url = utils.generate_link(config['url_length'])
         if r.setnx("link:" + url, destination): break
-    return view('layout.html', { 'shortlink': True, 'url': url })
+    return view('layout.html', { 'shorterlink': True, 'url': url })
 
-@shortlink.route('/<link>')
+@shorterlink.route('/<link>')
 def go(link):
     destination = r.get("link:" + link)
     if destination:
         return redirect(destination)
-    flash('no such shortlink')
+    flash('no such shorterlink')
     return redirect(url_for('index'))
 
 def view(t, v = {}):

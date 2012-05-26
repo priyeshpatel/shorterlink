@@ -1,7 +1,7 @@
 <!doctype html>
 <html>
     <head>
-        <title>Shortlink</title>
+        <title>Shorterlink</title>
 
         <style type="text/css">
             body {
@@ -61,7 +61,7 @@
             #link #url {
                 background: #ccc;
                 color: #666;
-                width: 300px;
+                width: 380px;
             }
 
             ::-webkit-input-placeholder {
@@ -100,19 +100,19 @@
     </head>
 
     <body>
-        <h1><a href="/"><span>shortlink</span></a></h1>
-        <h2>a simple shortlink app built with flask and redis; running on heroku</h2>
+        <h1><a href="/"><span>shorterlink</span></a></h1>
+        <h2>a simple short-link app built with flask and redis; running on heroku</h2>
 
         <div id="input">
             <form id="link" method="post">
                 <input id="url" name="url" placeholder="your url" />
-                <input type="submit" id="submit" value="get shortlink" />
+                <input type="submit" id="submit" value="get shorterlink" />
             </form>
         </div>
 
-        {% if shortlink %}
+        {% if shorterlink %}
         <div id="output">
-            <p>your shortlink is <a href="{{ config.full_url }}/{{ url }}" target="_blank">{{ config.full_url }}/{{ url }}</a></p>
+            <p>your shorterlink is <a href="{{ config.full_url }}/{{ url }}" target="_blank">{{ config.full_url }}/{{ url }}</a></p>
         </div>
         {% endif %}
 
@@ -127,7 +127,7 @@
         {% endwith %}
 
         <div id="footer">
-            <p><a href="https://github.com/priyeshpatel/shortlink" target="_blank">[source on github]</a> / <a href="http://pexat.com" target="_blank">[Priyesh Patel]</a></p>
+            <p><a href="https://github.com/priyeshpatel/shorterlink" target="_blank">[source on github]</a> / <a href="http://pexat.com" target="_blank">[Priyesh Patel]</a></p>
         </div>
     </body>
 </html>
