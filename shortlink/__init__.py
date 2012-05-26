@@ -1,22 +1,15 @@
 from flask import Flask, render_template, request, redirect, url_for, flash
 from config import config
-import os, sys, redis, random, string
+from . import utils
+import redis
 
 shortlink = Flask(__name__)
 
-def env(var):
-    try:
-        return os.environ[var]
-    except KeyError:
-        sys.exit("No environment variable %s" % var)
+shortlink.secret_key = utils.env('SECRET_KEY')
 
-shortlink.secret_key = env('SECRET_KEY')
-
-r = redis.StrictRedis(host=env('REDIS_HOST'), 
-        port=int(env('REDIS_PORT')),
-        db=int(env('REDIS_DB')))
-
-choices = string.letters + string.digits
+r = redis.StrictRedis(host=utils.env('REDIS_HOST'), 
+        port=int(utils.env('REDIS_PORT')),
+        db=int(utils.env('REDIS_DB')))
 
 @shortlink.route('/', methods=['GET'])
 def index():
@@ -26,7 +19,7 @@ def index():
 def make():
     destination = request.form['url']
     while True:
-        url = generate_link()
+        url = utils.generate_link(config['url_length'])
         if r.setnx(url, destination): break
     return view('layout.html', { 'shortlink': True, 'url': url })
 
@@ -41,6 +34,3 @@ def go(link):
 def view(t, v = {}):
     v['config'] = config
     return render_template(t, **v)
-
-def generate_link():
-    return ''.join(random.choice(choices) for i in range(config['url_length']))

@@ -1,10 +1,11 @@
-import os 
+import os
+from . import utils
 
 config = {}
 
-if os.environ.get('DEVELOPMENT', None):
-    config['url'] = "http://127.0.0.1:%i" % int(os.environ.get('PORT', 5000))
-else:
-    config['url'] = "http://blah.herokuapp.com"
-
+config['url'] = utils.env('URL')
+config['port'] = utils.env('PORT')
+config['full_url'] = config['url'] + ":" + config['port']
+if config['port'] == 80 or not os.environ.get('DEVELOPMENT', None):
+    config['full_url'] = config['url']
 config['url_length'] = 6

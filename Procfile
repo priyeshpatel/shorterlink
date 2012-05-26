@@ -1,1 +1,1 @@
-web: python run.py
+web: gunicorn -w 3 -b 0.0.0.0:$PORT run:shortlink
