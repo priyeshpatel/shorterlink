@@ -16,9 +16,15 @@ def index():
 @shorterlink.route('/', methods=['POST'])
 def make():
     destination = request.form['url']
+
+    if len(destination) == 0:
+        flash('please enter a url')
+        return redirect(url_for('index'))
+
     while True:
         url = utils.generate_link(config['url_length'])
         if r.setnx("link:" + url, destination): break
+
     return view('layout.html', { 'shorterlink': True, 'url': url })
 
 @shorterlink.route('/<link>')
